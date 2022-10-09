@@ -155,7 +155,7 @@
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Panels\Editor.cpp" />
+    <ClCompile Include="src\vendor\ImGui\TextEditor.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_draw.cpp" />
@@ -167,13 +167,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
-    <ClInclude Include="src\Panels\Editor.h" />
     <ClInclude Include="src\vendor\GLFW\glfw3.h" />
     <ClInclude Include="src\vendor\GLFW\glfw3native.h" />
     <ClInclude Include="src\vendor\GL\eglew.h" />
     <ClInclude Include="src\vendor\GL\glew.h" />
     <ClInclude Include="src\vendor\GL\glxew.h" />
     <ClInclude Include="src\vendor\GL\wglew.h" />
+    <ClInclude Include="src\vendor\ImGui\TextEditor.h" />
     <ClInclude Include="src\vendor\ImGui\imconfig.h" />
     <ClInclude Include="src\vendor\ImGui\imgui.h" />
     <ClInclude Include="src\vendor\ImGui\imgui_impl_glfw.h" />

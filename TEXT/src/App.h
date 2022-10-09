@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Window.h>
-#include <Panels/Editor.h>
+#include <ImGui/TextEditor.h>
 
 class App
 {
@@ -15,5 +15,5 @@ private:
 	Window m_Window;
 
 	bool m_ShowEditor = true;
-	EditorPanel m_Editor;
+	TextEditor m_Editor;
 };
