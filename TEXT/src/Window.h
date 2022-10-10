@@ -24,6 +24,10 @@ public:
 	void EndImGui();
 	void PollEvents() { glfwPollEvents(); }
 	void Swap() { glfwSwapBuffers(m_NativeWindow); }
+	void Close() { glfwSetWindowShouldClose(m_NativeWindow, true); }
+
+	bool Key(int key);
+	bool MouseButton(int button);
 	bool ShouldClose() { return glfwWindowShouldClose(m_NativeWindow); }
 
 private:

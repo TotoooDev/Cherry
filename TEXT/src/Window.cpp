@@ -1,4 +1,5 @@
 #include <Window.h>
+#include <Keycode.h>
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_impl_glfw.h>
 #include <ImGui/imgui_impl_opengl3.h>
@@ -109,6 +110,16 @@ void Window::EndImGui()
 		ImGui::RenderPlatformWindowsDefault();
 		glfwMakeContextCurrent(backup_current_context);
 	}
+}
+
+bool Window::Key(int key)
+{
+	return glfwGetKey(m_NativeWindow, key) == TOE_PRESS;
+}
+
+bool Window::MouseButton(int button)
+{
+	return glfwGetMouseButton(m_NativeWindow, button) == TOE_PRESS;
 }
 
 void Window::SetImGuiTheme()

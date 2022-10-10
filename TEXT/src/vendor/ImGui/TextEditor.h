@@ -266,6 +266,9 @@ public:
 	static const Palette& GetLightPalette();
 	static const Palette& GetRetroBluePalette();
 
+	// Added methods
+	void SetTextChanged(bool aValue) { mTextChanged = aValue; }
+
 private:
 	typedef std::vector<std::pair<std::regex, PaletteIndex>> RegexList;
 
