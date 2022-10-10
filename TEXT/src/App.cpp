@@ -45,12 +45,15 @@ void App::Run()
 
 		for (auto& editor : m_Editors)
 		{
-			ImGui::Begin(editor.Path.c_str(), &editor.Show, editor.Editor.IsTextChanged() ? ImGuiWindowFlags_UnsavedDocument : 0);
+			if (editor.Editor.CanRedo())
+				editor.Edited = true;
+			ImGuiWindowFlags flags = editor.Edited ? ImGuiWindowFlags_UnsavedDocument : ImGuiWindowFlags_None;
+			ImGui::Begin(editor.Path.c_str(), &editor.Show, flags);
 			auto cpos = editor.Editor.GetCursorPosition();
 			ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, editor.Editor.GetTotalLines(),
 				editor.Editor.IsOverwrite() ? "Ovr" : "Ins",
 				editor.Editor.CanUndo() ? "*" : " ",
-				editor.Editor.GetLanguageDefinition().mName.c_str(), "bonjour.txt");
+				editor.Editor.GetLanguageDefinition().mName.c_str(), editor.Path.c_str());
 			editor.Editor.Render("TextEditor");
 			editor.Editor.IsTextChanged();
 			ImGui::End();

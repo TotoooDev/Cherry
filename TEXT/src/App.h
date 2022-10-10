@@ -19,6 +19,7 @@ private:
 		TextEditor Editor;
 		std::string Path;
 		bool Show;
+		bool Edited;
 	};
 
 	std::vector<EditorPanel> m_Editors;
