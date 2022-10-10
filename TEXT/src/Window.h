@@ -18,6 +18,7 @@ public:
 	~Window();
 
 	WindowSpecification GetSpec() { return m_Spec; }
+	GLFWwindow* GetNativeWindow() { return m_NativeWindow; }
 
 	void BeginImGui();
 	void EndImGui();

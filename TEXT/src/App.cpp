@@ -1,13 +1,13 @@
 #include <App.h>
+#include <Utils.h>
 #include <ImGui/imgui.h>
 #include <vector>
+#include <fstream>
 
 App::App(const WindowSpecification& spec)
 	: m_Window(spec)
 {
-	auto lang = TextEditor::LanguageDefinition::CPlusPlus();
-	m_Editor.SetLanguageDefinition(lang);
-	m_Editor.SetShowWhitespaces(false);
+
 }
 
 void App::Run()
@@ -25,19 +25,36 @@ void App::Run()
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("Open...", "Ctrl+O"))
-			{ }
+			{ 
+				std::string path = Utils::OpenFileDialog("All files\0*.*\0", m_Window.GetNativeWindow());
+				EditorPanel editor;
+				editor.Path = path;
+				m_Editors.push_back(editor);
+			}
+			if (ImGui::MenuItem("Save", "Ctrl+S"))
+			{
+				for (auto& editor : m_Editors)
+				{
+					std::ofstream file(editor.Path);
+					file << editor.Editor.GetText();
+				}
+			}
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 
-		ImGui::Begin("Editor", &m_ShowEditor);
-		auto cpos = m_Editor.GetCursorPosition();
-		ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, m_Editor.GetTotalLines(),
-			m_Editor.IsOverwrite() ? "Ovr" : "Ins",
-			m_Editor.CanUndo() ? "*" : " ",
-			m_Editor.GetLanguageDefinition().mName.c_str(), "bonjour.txt");
-		m_Editor.Render("TextEditor");
-		ImGui::End();
+		for (auto& editor : m_Editors)
+		{
+			ImGui::Begin(editor.Path.c_str(), &editor.Show, editor.Editor.IsTextChanged() ? ImGuiWindowFlags_UnsavedDocument : 0);
+			auto cpos = editor.Editor.GetCursorPosition();
+			ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, editor.Editor.GetTotalLines(),
+				editor.Editor.IsOverwrite() ? "Ovr" : "Ins",
+				editor.Editor.CanUndo() ? "*" : " ",
+				editor.Editor.GetLanguageDefinition().mName.c_str(), "bonjour.txt");
+			editor.Editor.Render("TextEditor");
+			editor.Editor.IsTextChanged();
+			ImGui::End();
+		}
 
 		m_Window.EndImGui();
 

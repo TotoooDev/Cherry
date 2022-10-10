@@ -14,6 +14,12 @@ public:
 private:
 	Window m_Window;
 
-	bool m_ShowEditor = true;
-	TextEditor m_Editor;
+	struct EditorPanel
+	{
+		TextEditor Editor;
+		std::string Path;
+		bool Show;
+	};
+
+	std::vector<EditorPanel> m_Editors;
 };
