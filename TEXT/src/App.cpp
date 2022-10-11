@@ -7,9 +7,9 @@
 #include <iostream>
 
 App::App(const WindowSpecification& spec)
-	: m_Window(spec)
+	: m_Window(spec), m_BrowserPanel(&m_Editors)
 {
-	m_BrowserPanel.SetCurrentPath("C:\\Users\\nanog\\Documents\\Test TEXT");
+	
 }
 
 void App::Run()
@@ -53,35 +53,54 @@ void App::Run()
 
 			ImGui::EndMenu();
 		}
+		if (ImGui::BeginMenu("Edit"))
+		{
+			if (ImGui::MenuItem("Undo", "Ctrl+Z", nullptr, m_FocusedEditor != nullptr))
+				m_FocusedEditor->GetEditor().Undo();
+			if (ImGui::MenuItem("Redo", "Ctrl+Y", nullptr, m_FocusedEditor != nullptr))
+				m_FocusedEditor->GetEditor().Redo();
+
+			ImGui::Separator();
+
+			if (ImGui::MenuItem("Cut", "Ctrl+X", nullptr, m_FocusedEditor != nullptr))
+				m_FocusedEditor->GetEditor().Cut();
+			if (ImGui::MenuItem("Copy", "Ctrl+C", nullptr, m_FocusedEditor != nullptr))
+				m_FocusedEditor->GetEditor().Copy();
+			if (ImGui::MenuItem("Paste", "Ctrl+V", nullptr, m_FocusedEditor != nullptr))
+				m_FocusedEditor->GetEditor().Paste();
+
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("View"))
+		{
+			ImGui::MenuItem("File browser", "", &m_ShowBrowserPanel);
+			ImGui::MenuItem("Get started", "", &m_ShowStartPanel);
+
+			ImGui::EndMenu();
+		}
 		ImGui::EndMainMenuBar();
 
-		for (unsigned int i = 0; i < m_Editors.size(); i++)
+		for (auto&& [editor, isOpen] : m_Editors)
 		{
-			EditorPanel& editor = m_Editors[i];
-			if (editor.IsOpen)
-			{
-				if (editor.Editor.IsTextChanged())
-					editor.Edited = true;
-				ImGuiWindowFlags flags = editor.Edited ? ImGuiWindowFlags_UnsavedDocument : ImGuiWindowFlags_None;
-
-				ImGui::Begin(editor.Name.c_str(), &editor.IsOpen, flags);
-
-				if (ImGui::IsWindowFocused())
-					m_FocusedWindow = i;
-
-				auto cpos = editor.Editor.GetCursorPosition();
-				ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, editor.Editor.GetTotalLines(),
-					editor.Editor.IsOverwrite() ? "Ovr" : "Ins",
-					editor.Editor.CanUndo() ? "*" : " ",
-					editor.Editor.GetLanguageDefinition().mName.c_str(), editor.Path.c_str());
-				editor.Editor.Render("TextEditor");
-
-				ImGui::End();
-			}
+			if (isOpen)
+				editor.Draw(&isOpen);
+			if (editor.IsFocused())
+				m_FocusedEditor = &editor;
 		}
 
 		if (m_ShowBrowserPanel)
 			m_BrowserPanel.Draw(&m_ShowBrowserPanel);
+
+		if (m_ShowStartPanel)
+		{
+			m_StartPanel.Draw(&m_ShowStartPanel);
+			if (m_StartPanel.New())
+				New();
+			if (m_StartPanel.Open())
+				Open();
+			if (m_StartPanel.OpenFolder())
+				OpenFolder();
+		}
 
 		m_Window.EndImGui();
 
@@ -106,15 +125,26 @@ void App::HandleInputs()
 			Open();
 		if (m_Window.Key(TOE_KEY_S))
 			Save();
+
+		if (m_Window.Key(TOE_KEY_Z))
+			m_FocusedEditor->GetEditor().Undo();
+		if (m_Window.Key(TOE_KEY_Y))
+			m_FocusedEditor->GetEditor().Redo();
+
+		if (m_Window.Key(TOE_KEY_X))
+			m_FocusedEditor->GetEditor().Cut();
+		if (m_Window.Key(TOE_KEY_C))
+			m_FocusedEditor->GetEditor().Copy();
+		if (m_Window.Key(TOE_KEY_P))
+			m_FocusedEditor->GetEditor().Paste();
 	}
 }
 
 void App::New()
 {
 	EditorPanel editor;
-	editor.Name = "Unnamed document";
-	editor.Editor.SetShowWhitespaces(false);
-	m_Editors.push_back(editor);
+	editor.GetEditor().SetShowWhitespaces(false);
+	m_Editors.push_back({ editor, true });
 }
 
 void App::Open()
@@ -122,19 +152,31 @@ void App::Open()
 	std::string path = Utils::OpenFileDialog("All files\0*.*\0", m_Window.GetNativeWindow());
 	if (!path.empty())
 	{
-		EditorPanel editor;
-		editor.Path = path;
+		// Check is the editor already exists
+		bool exists = false;
+		for (auto&& [editor, isOpen] : m_Editors)
+		{
+			if (path == editor.GetPath())
+			{
+				if (!isOpen)
+					isOpen = true;
+				exists = true;
+				break;
+			}
+		}
+		if (exists)
+			return;
+
+		EditorPanel editor(path, Utils::FileName(path));
 		std::ifstream t(path);
 		if (t.good())
 		{
 			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-			editor.Editor.SetText(str);
-			editor.Editor.SetShowWhitespaces(false);
-			editor.Editor.SetTextChanged(false);
+			editor.GetEditor().SetText(str);
+			editor.GetEditor().SetShowWhitespaces(false);
+			editor.GetEditor().SetTextChanged(false);
+			m_Editors.push_back({ editor, true });
 		}
-		editor.Name = path.substr(path.find_last_of("\\"));
-		editor.Name.erase(0, 1);
-		m_Editors.push_back(editor);
 	}
 }
 
@@ -146,37 +188,36 @@ void App::OpenFolder()
 
 void App::Save()
 {
-	EditorPanel& editor = m_Editors[m_FocusedWindow];
-	if (editor.Path.empty())
+	if (!m_FocusedEditor)
+		return;
+	if (m_FocusedEditor->GetPath().empty())
 	{
 		SaveAs();
 		return;
 	}
-	std::ofstream file(editor.Path);
-	file << editor.Editor.GetText();
-	editor.Edited = false;
+	std::ofstream file(m_FocusedEditor->GetPath());
+	file << m_FocusedEditor->GetEditor().GetText();
+	m_FocusedEditor->SetEdited(false);
 }
 
 void App::SaveAs()
 {
-	EditorPanel& editor = m_Editors[m_FocusedWindow];
 	std::string path = Utils::SaveFileDialog("All files\0*.*\0", m_Window.GetNativeWindow());
 	if (!path.empty())
 	{
-		editor.Path = path;
-		editor.Name = path.substr(path.find_last_of("\\"));
-		editor.Name.erase(0, 1);
-		std::ofstream file(editor.Path);
-		file << editor.Editor.GetText();
-		editor.Edited = false;
+		m_FocusedEditor->SetPath(path);
+		m_FocusedEditor->SetName(Utils::FileName(path));
+		std::ofstream file(path);
+		file << m_FocusedEditor->GetEditor().GetText();
+		m_FocusedEditor->SetEdited(false);
 	}
 }
 
 void App::SaveAll()
 {
-	for (unsigned int i = 0; i < m_Editors.size(); i++)
+	for (auto&& [editor, isOpen] : m_Editors)
 	{
-		m_FocusedWindow = i;
+		m_FocusedEditor = &editor;
 		Save();
 	}
 }

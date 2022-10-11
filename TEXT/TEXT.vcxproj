@@ -160,6 +160,8 @@
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Panels\Browser.cpp" />
+    <ClCompile Include="src\Panels\Editor.cpp" />
+    <ClCompile Include="src\Panels\Start.cpp" />
     <ClCompile Include="src\Utils.cpp" />
     <ClCompile Include="src\vendor\ImGui\TextEditor.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui.cpp" />
@@ -175,6 +177,8 @@
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\Keycode.h" />
     <ClInclude Include="src\Panels\Browser.h" />
+    <ClInclude Include="src\Panels\Editor.h" />
+    <ClInclude Include="src\Panels\Start.h" />
     <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\vendor\GLFW\glfw3.h" />
     <ClInclude Include="src\vendor\GLFW\glfw3native.h" />
@@ -182,6 +186,7 @@
     <ClInclude Include="src\vendor\GL\glew.h" />
     <ClInclude Include="src\vendor\GL\glxew.h" />
     <ClInclude Include="src\vendor\GL\wglew.h" />
+    <ClInclude Include="src\vendor\IconFontCppHeaders\IconsMaterialDesign.h" />
     <ClInclude Include="src\vendor\ImGui\TextEditor.h" />
     <ClInclude Include="src\vendor\ImGui\imconfig.h" />
     <ClInclude Include="src\vendor\ImGui\imgui.h" />
@@ -193,6 +198,9 @@
     <ClInclude Include="src\vendor\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\vendor\ImGui\imstb_truetype.h" />
     <ClInclude Include="src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\vendor\IconFontCppHeaders\licence.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

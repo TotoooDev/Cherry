@@ -100,10 +100,25 @@ namespace Utils
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
 		return conv.from_bytes(str);
 	}
-
 	std::string WStringToString(const std::wstring& wstr)
 	{
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> conv;
 		return conv.to_bytes(wstr);
+	}
+
+	std::string FileName(const std::filesystem::directory_entry& dirEntry)
+	{
+		return std::filesystem::path(dirEntry).filename().string();
+	}
+	std::string FileName(const std::string& path)
+	{
+		return std::filesystem::path(path).filename().string();
+	}
+
+	ImFont* GetDefaultFontWithScale(float scale)
+	{
+		auto& io = ImGui::GetIO();
+		ImFont* font = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", scale);
+		return font;
 	}
 }

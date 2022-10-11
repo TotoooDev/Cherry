@@ -6,6 +6,7 @@ int main(int argc, char* argv[])
 	spec.Width = 1280;
 	spec.Height = 720;
 	spec.Title = "TEXT Editor";
+	spec.VSync = true;
 
 	App app(spec);
 	app.Run();

@@ -9,6 +9,7 @@ struct WindowSpecification
 	std::string Title;
 	unsigned int Width;
 	unsigned int Height;
+	bool VSync;
 };
 
 class Window

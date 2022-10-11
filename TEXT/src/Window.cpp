@@ -3,6 +3,7 @@
 #include <ImGui/imgui.h>
 #include <ImGui/imgui_impl_glfw.h>
 #include <ImGui/imgui_impl_opengl3.h>
+#include <IconFontCppHeaders/IconsMaterialDesign.h>
 #include <iostream>
 
 bool WasGLFWInit = false;
@@ -29,6 +30,7 @@ Window::Window(const WindowSpecification& spec)
 		return;
 	}
 	glfwMakeContextCurrent(m_NativeWindow);
+	glfwSwapInterval(m_Spec.VSync);
 
 	// Init GLEW
 	if (!WasGLFWInit)
@@ -50,6 +52,10 @@ Window::Window(const WindowSpecification& spec)
 
 	// Add a prettier font
 	io.FontDefault = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", 18.0f);
+	// Merge in icons from Font Awesome
+	static const ImWchar icons_ranges[] = { ICON_MIN_MD, ICON_MAX_16_MD, 0 };
+	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", 18.0f, &icons_config, icons_ranges);
 
 	SetImGuiTheme();
 

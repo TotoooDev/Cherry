@@ -54,6 +54,12 @@
     <ClCompile Include="src\Panels\Browser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Panels\Editor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\Start.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vendor\ImGui\imconfig.h">
@@ -119,5 +125,17 @@
     <ClInclude Include="src\Keycode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\Editor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\IconFontCppHeaders\IconsMaterialDesign.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panels\Start.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="src\vendor\IconFontCppHeaders\licence.txt" />
   </ItemGroup>
 </Project>

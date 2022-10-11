@@ -1,7 +1,9 @@
 #pragma once
 
 #include <Window.h>
+#include <Panels/Editor.h>
 #include <Panels/Browser.h>
+#include <Panels/Start.h>
 #include <ImGui/TextEditor.h>
 
 class App
@@ -25,18 +27,11 @@ private:
 
 	Window m_Window;
 
-	struct EditorPanel
-	{
-		TextEditor Editor;
-		std::string Path;
-		std::string Name;
-		bool IsOpen = true;
-		bool Edited = false;
-	};
-
-	std::vector<EditorPanel> m_Editors;
-	unsigned int m_FocusedWindow;
+	std::vector<std::pair<EditorPanel, bool>> m_Editors;
+	EditorPanel* m_FocusedEditor = nullptr;
 
 	bool m_ShowBrowserPanel = true;
 	BrowserPanel m_BrowserPanel;
+	bool m_ShowStartPanel = true;
+	StartPanel m_StartPanel;
 };
