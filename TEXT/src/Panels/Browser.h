@@ -15,6 +15,8 @@ public:
 
 private:
 	void RecurseFolders(std::string path, bool treeNodeOpened);
+	void AddNewEditorPanel(const std::string& path);
+	void ShowContextualMenu(const char* id, const std::string& path);
 
 	std::string m_CurrentPath;
 	std::string m_SelectedPath;

@@ -19,6 +19,7 @@ void BrowserPanel::Draw(bool* isOpen)
 
 	if (!m_CurrentPath.empty() && ImGui::TreeNodeEx(Utils::FileName(m_CurrentPath).c_str(), ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
 	{
+		ShowContextualMenu("contextual_root", m_CurrentPath);
 		RecurseFolders(m_CurrentPath, false);
 		ImGui::TreePop();
 	}
@@ -38,8 +39,13 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			std::string newPath = std::filesystem::current_path().string() + "\\" + Utils::FileName(dirEntry);
 			std::string displayName = ICON_MD_FOLDER " " + Utils::FileName(newPath);
 			bool treeNode = ImGui::TreeNodeEx(displayName.c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_FramePadding);
+			
+			ShowContextualMenu("contextual", newPath);
+
 			if (treeNode)
+			{
 				RecurseFolders(newPath, treeNode);
+			}
 		}
 		else
 		{
@@ -65,18 +71,10 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 					}
 					if (!exists)
 					{
-						EditorPanel editor(dirEntry.path().string(), Utils::FileName(dirEntry));
-						std::ifstream t(editor.GetPath());
-						if (t.good())
-						{
-							std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-							editor.GetEditor().SetText(str);
-							editor.GetEditor().SetShowWhitespaces(false);
-							editor.GetEditor().SetTextChanged(false);
-							m_Editors->push_back({ editor, true });
-						}
+						AddNewEditorPanel(dirEntry.path().string());
 					}
 				}
+
 				ImGui::TreePop();
 			}
 		}
@@ -84,4 +82,45 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 
 	if (treeNodeOpened)
 		ImGui::TreePop();
+}
+
+void BrowserPanel::AddNewEditorPanel(const std::string& path)
+{
+	EditorPanel editor(path, Utils::FileName(path));
+	std::ifstream t(editor.GetPath());
+
+	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+	editor.GetEditor().SetText(str);
+	editor.GetEditor().SetShowWhitespaces(false);
+	editor.GetEditor().SetTextChanged(false);
+	m_Editors->push_back({ editor, true });
+}
+
+void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
+{
+	if (ImGui::BeginPopupContextItem(id))
+	{
+		if (ImGui::MenuItem("New file"))
+		{
+			std::string filePath = path + "\\Unnamed";
+			if (std::filesystem::exists(filePath))
+			{
+
+			}
+			std::ofstream file(filePath);
+			unsigned int i = 1;
+			while (file.good())
+			{
+				file.close();
+				filePath += std::to_string(i);
+				file.open(filePath);
+			}
+			AddNewEditorPanel(filePath);
+		}
+		if (ImGui::MenuItem("New folder"))
+		{
+			
+		}
+		ImGui::EndPopup();
+	}
 }
