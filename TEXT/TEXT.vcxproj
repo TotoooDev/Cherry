@@ -186,7 +186,6 @@
     <ClInclude Include="src\vendor\GL\glew.h" />
     <ClInclude Include="src\vendor\GL\glxew.h" />
     <ClInclude Include="src\vendor\GL\wglew.h" />
-    <ClInclude Include="src\vendor\IconFontCppHeaders\IconsMaterialDesign.h" />
     <ClInclude Include="src\vendor\ImGui\TextEditor.h" />
     <ClInclude Include="src\vendor\ImGui\imconfig.h" />
     <ClInclude Include="src\vendor\ImGui\imgui.h" />
@@ -201,7 +200,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\vendor\GLFW\CMakeLists.txt" />
-    <Text Include="src\vendor\IconFontCppHeaders\licence.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
