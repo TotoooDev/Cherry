@@ -1,3 +1,6 @@
 [submodule "TEXT/src/vendor/GLFW"]
 	path = TEXT/src/vendor/GLFW
 	url = https://github.com/glfw/glfw.git
+[submodule "TEXT/src/vendor/IconFontCPPHeaders"]
+	path = TEXT/src/vendor/IconFontCPPHeaders
+	url = https://github.com/juliettef/IconFontCppHeaders.git
