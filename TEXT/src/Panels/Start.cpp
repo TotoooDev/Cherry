@@ -14,7 +14,7 @@ void StartPanel::Draw(bool* isOpen)
 
 	ImGui::PushFont(m_LargeFont);
 	ImGui::SameLine(64.0f);
-	ImGui::Text("\nTEXT");
+	ImGui::Text("\nCherry");
 	ImGui::PopFont();
 
 	ImGui::NewLine();
