@@ -1,6 +1,6 @@
 #pragma once
 
-#include <ImGui/TextEditor.h>
+#include <ImGuiColorTextEdit/TextEditor.h>
 #include <string>
 
 class EditorPanel

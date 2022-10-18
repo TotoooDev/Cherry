@@ -1,4 +1,5 @@
 #include <Panels/Editor.h>
+#include <ImGui/imgui.h>
 
 EditorPanel::EditorPanel(const std::string& path, const std::string& name)
 	: m_Path(path), m_Name(name)
