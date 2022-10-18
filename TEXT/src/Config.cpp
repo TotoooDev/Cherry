@@ -1,7 +1,7 @@
 #include <Config.h>
 #include <fstream>
 
-void GlobalConfig::Init()
+void Config::Init()
 {
 	std::ifstream file;
 	file.open(m_FilePath);
@@ -9,19 +9,20 @@ void GlobalConfig::Init()
 	file.close();
 }
 
-void GlobalConfig::SetConfigFile(const std::string& path)
+void Config::SetConfigFile(const std::string& path)
 {
 	m_FilePath = path;
 	Init();
 }
 
-nlohmann::json& GlobalConfig::Get()
+nlohmann::json& Config::Get()
 {
 	return m_JSON;
 }
 
-void GlobalConfig::Write()
+void Config::Write()
 {
 	std::ofstream file(m_FilePath);
 	file << std::setw(4) << m_JSON;
+	file.close();
 }

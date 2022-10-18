@@ -1,4 +1,5 @@
 #include <App.h>
+#include <Config.h>
 #include <Utils.h>
 #include <Keycode.h>
 #include <ImGui/imgui.h>
@@ -9,7 +10,9 @@
 App::App(const WindowSpecification& spec)
 	: m_Window(spec), m_BrowserPanel(&m_Editors)
 {
-	
+	Config::SetConfigFile(std::filesystem::current_path().string() + "\\config.json");
+
+	m_BrowserPanel.SetCurrentPath(Config::Get()["working_dir"]);
 }
 
 void App::Run()
@@ -49,10 +52,15 @@ void App::Run()
 				OpenFolder();
 		}
 
+		// Mandatory ImGui::End() because of CreateDockspace()
+		ImGui::End();
+
 		m_Window.EndImGui();
 
 		m_Window.Swap();
 	}
+
+	Config::Write();
 }
 
 void App::CreateDockspace()
@@ -234,7 +242,6 @@ void App::Open()
 			std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 			editor.GetEditor().SetText(str);
 			editor.GetEditor().SetShowWhitespaces(false);
-			// editor.GetEditor().SetTextChanged(false);
 			m_Editors.push_back({ editor, true });
 		}
 	}
@@ -244,6 +251,7 @@ void App::OpenFolder()
 {
 	std::string path = Utils::OpenFolderDialog();
 	m_BrowserPanel.SetCurrentPath(path);
+	Config::Get()["working_dir"] = path;
 }
 
 void App::Save()

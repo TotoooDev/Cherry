@@ -3,7 +3,7 @@
 #include <string>
 #include <nlohmann/json.hpp>
 
-class GlobalConfig
+class Config
 {
 public:
 	static void Init();
