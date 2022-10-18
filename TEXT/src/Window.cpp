@@ -57,6 +57,9 @@ Window::Window(const WindowSpecification& spec)
 	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
 	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", 18.0f, &icons_config, icons_ranges);
 
+	// Change the imgui.ini path so it does not appear everywhere
+	io.IniFilename = "imGui.ini";
+
 	SetImGuiTheme();
 
 	// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.

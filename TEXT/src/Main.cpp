@@ -3,8 +3,8 @@
 int main(int argc, char* argv[])
 {
 	WindowSpecification spec;
-	spec.Width = 1280;
-	spec.Height = 720;
+	spec.Width = 800;
+	spec.Height = 600;
 	spec.Title = "TEXT Editor";
 	spec.VSync = true;
 

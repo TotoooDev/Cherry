@@ -18,5 +18,5 @@ private:
 	ImFont* m_LargeFont;
 	ImFont* m_MediumFont;
 
-	bool m_New, m_Open, m_OpenFolder;
+	bool m_New = false, m_Open = false, m_OpenFolder = false;
 };

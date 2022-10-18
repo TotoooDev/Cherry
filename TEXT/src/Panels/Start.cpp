@@ -14,7 +14,7 @@ void StartPanel::Draw(bool* isOpen)
 
 	ImGui::PushFont(m_LargeFont);
 	ImGui::SameLine(64.0f);
-	ImGui::Text("TEXT");
+	ImGui::Text("\nTEXT");
 	ImGui::PopFont();
 
 	ImGui::NewLine();
@@ -32,14 +32,20 @@ void StartPanel::Draw(bool* isOpen)
 	ImGui::PopFont();
 
 	ImGui::NewLine();
-	ImGui::SameLine(80.0f);
+	ImGui::NewLine();
+
+	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 16.0f));
+
+	ImGui::SameLine(128.0f);
 	m_New = ImGui::Button(ICON_MD_DESCRIPTION "New file");
 	ImGui::NewLine();
-	ImGui::SameLine(80.0f);
+	ImGui::SameLine(128.0f);
 	m_Open = ImGui::Button(ICON_MD_FILE_OPEN "Open file");
 	ImGui::NewLine();
-	ImGui::SameLine(80.0f);
+	ImGui::SameLine(128.0f);
 	m_OpenFolder = ImGui::Button(ICON_MD_FOLDER_OPEN "Open folder");
+
+	ImGui::PopStyleVar();
 
 	ImGui::End();
 }

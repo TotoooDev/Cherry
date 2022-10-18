@@ -3,6 +3,7 @@
 #include <ImGui/imgui.h>
 #include <IconFontCppHeaders/IconsMaterialDesign.h>
 #include <fstream>
+#include <iostream>
 
 BrowserPanel::BrowserPanel(std::vector<std::pair<EditorPanel, bool>>* editors, const std::string& path)
 	:  m_Editors(editors), m_CurrentPath(path)
@@ -40,7 +41,8 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			std::string displayName = ICON_MD_FOLDER " " + Utils::FileName(newPath);
 			bool treeNode = ImGui::TreeNodeEx(displayName.c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_FramePadding);
 			
-			ShowContextualMenu("contextual", newPath);
+			std::string id = "contextual##" + dirEntry.path().string();
+			ShowContextualMenu(id.c_str(), newPath);
 
 			if (treeNode)
 			{
@@ -100,27 +102,55 @@ void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
 {
 	if (ImGui::BeginPopupContextItem(id))
 	{
+		// What the fuck.
 		if (ImGui::MenuItem("New file"))
 		{
 			std::string filePath = path + "\\Unnamed";
-			if (std::filesystem::exists(filePath))
+			if (!std::filesystem::exists(filePath))
 			{
-
+				std::ofstream file(filePath);
+				AddNewEditorPanel(filePath);
 			}
-			std::ofstream file(filePath);
-			unsigned int i = 1;
-			while (file.good())
+			else
 			{
-				file.close();
-				filePath += std::to_string(i);
-				file.open(filePath);
+				filePath += "1";
+				for (unsigned int i = 0; ; i++)
+				{
+					i++;
+					filePath = filePath.substr(0, filePath.length() - 1) + std::to_string(i);
+					if (!std::filesystem::exists(filePath))
+					{
+						std::ofstream file(filePath);
+						AddNewEditorPanel(filePath);
+						break;
+					}
+				}
 			}
-			AddNewEditorPanel(filePath);
 		}
+
 		if (ImGui::MenuItem("New folder"))
 		{
-			
+			std::string filePath = path + "\\NewFolder";
+			if (!std::filesystem::exists(filePath))
+			{
+				std::filesystem::create_directories(filePath);
+			}
+			else
+			{
+				filePath += "1";
+				for (unsigned int i = 0; ; i++)
+				{
+					i++;
+					filePath = filePath.substr(0, filePath.length() - 1) + std::to_string(i);
+					if (!std::filesystem::exists(filePath))
+					{
+						std::filesystem::create_directories(filePath);
+						break;
+					}
+				}
+			}
 		}
+
 		ImGui::EndPopup();
 	}
 }
