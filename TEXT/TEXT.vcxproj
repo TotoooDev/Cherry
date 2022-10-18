@@ -85,13 +85,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor\json\include;src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor\json\include;src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Panels\Browser.cpp" />
     <ClCompile Include="src\Panels\Editor.cpp" />
@@ -382,178 +383,12 @@
     <ClCompile Include="src\vendor\json\docs\mkdocs\docs\integration\conan\example.cpp" />
     <ClCompile Include="src\vendor\json\docs\mkdocs\docs\integration\example.cpp" />
     <ClCompile Include="src\vendor\json\docs\mkdocs\docs\integration\vcpkg\example.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\config\custom.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\config\default.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\config\noversion.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\diag\diag.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\diag\diag_off.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\diag\diag_on.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\inline_ns\use_current.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\inline_ns\use_v3_10_5.cpp" />
-    <ClCompile Include="src\vendor\json\tests\abi\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\benchmarks\src\benchmarks.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_add_subdirectory\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_fetch_content2\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_fetch_content\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_import\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_import_minver\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_target_include_directories\project\Bar.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_target_include_directories\project\Foo.cpp" />
-    <ClCompile Include="src\vendor\json\tests\cmake_target_include_directories\project\main.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-driver_afl.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_bjdata.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_bson.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_cbor.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_json.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_msgpack.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\fuzzer-parse_ubjson.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-32bit.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-algorithms.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-allocator.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-alt-string.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-assert_macro.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-binary_formats.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-bjdata.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-bson.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-byte_container_with_subtype.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-capacity.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-cbor.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-class_const_iterator.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-class_iterator.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-class_lexer.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-class_parser.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-comparison.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-concepts.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-constructor1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-constructor2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-convenience.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-conversions.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-custom-base-class.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-deserialization.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-diagnostics.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-disabled_exceptions.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-element_access1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-element_access2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-hash.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-inspection.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-items.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-iterators1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-iterators2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-json_patch.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-json_pointer.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-large_json.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-merge_patch.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-meta.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-modifiers.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-msgpack.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-noexcept.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-ordered_json.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-ordered_map.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-pointer_access.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-readme.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-reference_access.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-regression1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-regression2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-serialization.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-testsuites.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-to_chars.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-type_traits.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-ubjson.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-udl.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-udt.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-udt_macro.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-unicode1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-unicode2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-unicode3.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-unicode4.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-unicode5.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-user_defined_input.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-windows_h.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit-wstring.cpp" />
-    <ClCompile Include="src\vendor\json\tests\src\unit.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\afl\afl_driver.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerCrossOver.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerDriver.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerExtFunctionsDlsym.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerExtFunctionsWeak.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerExtFunctionsWeakAlias.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerIO.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerIOPosix.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerIOWindows.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerLoop.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerMain.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerMerge.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerMutate.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerSHA1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerTracePC.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerTraceState.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtil.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtilDarwin.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtilLinux.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtilPosix.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtilWindows.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\standalone\StandaloneFuzzTargetMain.c" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\AbsNegAndConstant64Test.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\AbsNegAndConstantTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\AccumulateAllocationsTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\AFLDriverTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\BufferOverflowOnInput.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\CallerCalleeTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\CounterTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\CustomCrossOverTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\CustomMutatorTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\DivTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\DSO1.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\DSO2.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\DSOTestExtra.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\DSOTestMain.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\EmptyTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\FourIndependentBranchesTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\FullCoverageSetTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\FuzzerUnittest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\InitializeTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\LeakTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\LeakTimeoutTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\LoadTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\MemcmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\NthRunCrashTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\NullDerefOnEmptyTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\NullDerefTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\OneHugeAllocTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\OutOfMemorySingleLargeMallocTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\OutOfMemoryTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\RepeatedBytesTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\RepeatedMemcmp.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\ShrinkControlFlowTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\ShrinkValueProfileTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SignedIntOverflowTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SimpleCmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SimpleDictionaryTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SimpleHashTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SimpleTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SimpleThreadedTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SingleMemcmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SingleStrcmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SingleStrncmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SpamyTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\StrcmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\StrncmpOOBTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\StrncmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\StrstrTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SwapCmpTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\Switch2Test.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\SwitchTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\ThreadedLeakTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\ThreadedTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\TimeoutEmptyTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\TimeoutTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\TraceMallocTest.cpp" />
-    <ClCompile Include="src\vendor\json\tests\thirdparty\Fuzzer\test\UninstrumentedTest.cpp" />
     <ClCompile Include="src\vendor\json\tools\macro_builder\main.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\App.h" />
+    <ClInclude Include="src\Config.h" />
     <ClInclude Include="src\Keycode.h" />
     <ClInclude Include="src\Panels\Browser.h" />
     <ClInclude Include="src\Panels\Editor.h" />
@@ -633,31 +468,6 @@
     <ClInclude Include="src\vendor\json\include\nlohmann\thirdparty\hedley\hedley_undef.hpp" />
     <ClInclude Include="src\vendor\json\single_include\nlohmann\json.hpp" />
     <ClInclude Include="src\vendor\json\single_include\nlohmann\json_fwd.hpp" />
-    <ClInclude Include="src\vendor\json\tests\abi\config\config.hpp" />
-    <ClInclude Include="src\vendor\json\tests\abi\diag\diag.hpp" />
-    <ClInclude Include="src\vendor\json\tests\abi\include\nlohmann\json_v3_10_5.hpp" />
-    <ClInclude Include="src\vendor\json\tests\cmake_target_include_directories\project\Bar.hpp" />
-    <ClInclude Include="src\vendor\json\tests\cmake_target_include_directories\project\Foo.hpp" />
-    <ClInclude Include="src\vendor\json\tests\src\make_test_data_available.hpp" />
-    <ClInclude Include="src\vendor\json\tests\src\test_utils.hpp" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\doctest\doctest.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\doctest\doctest_compatibility.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\fifo_map\fifo_map.hpp" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerCorpus.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerDefs.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerDictionary.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerExtFunctions.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerInterface.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerInternal.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerIO.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerMerge.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerMutate.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerOptions.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerRandom.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerSHA1.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerTracePC.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerUtil.h" />
-    <ClInclude Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerValueBitMap.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
@@ -676,10 +486,6 @@
     <None Include="src\vendor\ImGuiColorTextEdit\CONTRIBUTING" />
     <None Include="src\vendor\ImGuiColorTextEdit\LICENSE" />
     <None Include="src\vendor\ImGuiColorTextEdit\README.md" />
-    <None Include="src\vendor\json\tests\reports\2016-08-29-fuzz\index.html" />
-    <None Include="src\vendor\json\tests\reports\2016-10-02-fuzz\index.html" />
-    <None Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerExtFunctions.def" />
-    <None Include="src\vendor\json\tests\thirdparty\Fuzzer\FuzzerFlags.def" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

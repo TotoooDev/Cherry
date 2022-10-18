@@ -7,6 +7,3 @@
 [submodule "TEXT/src/vendor/ImGuiColorTextEdit"]
 	path = TEXT/src/vendor/ImGuiColorTextEdit
 	url = https://github.com/BalazsJako/ImGuiColorTextEdit.git
-[submodule "TEXT/src/vendor/json"]
-	path = TEXT/src/vendor/json
-	url = https://github.com/nlohmann/json.git
