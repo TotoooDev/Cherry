@@ -4,7 +4,7 @@
 #include <Panels/Editor.h>
 #include <Panels/Browser.h>
 #include <Panels/Start.h>
-#include <ImGui/TextEditor.h>
+#include <ImGuiColorTextEdit/TextEditor.h>
 
 class App
 {

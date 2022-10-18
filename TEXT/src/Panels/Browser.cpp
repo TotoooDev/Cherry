@@ -94,7 +94,7 @@ void BrowserPanel::AddNewEditorPanel(const std::string& path)
 	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
 	editor.GetEditor().SetText(str);
 	editor.GetEditor().SetShowWhitespaces(false);
-	editor.GetEditor().SetTextChanged(false);
+	// editor.GetEditor().SetTextChanged(false);
 	m_Editors->push_back({ editor, true });
 }
 

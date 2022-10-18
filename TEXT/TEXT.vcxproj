@@ -85,13 +85,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>src\vendor\ImGui;src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -164,29 +164,13 @@
     <ClCompile Include="src\Panels\Start.cpp" />
     <ClCompile Include="src\Utils.cpp" />
     <ClCompile Include="src\vendor\ImGuiColorTextEdit\TextEditor.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_allegro5.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_android.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_dx10.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_dx11.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_dx12.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_dx9.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_glut.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_opengl2.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_sdl.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_sdlrenderer.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_vulkan.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_wgpu.cpp" />
-    <ClCompile Include="src\vendor\ImGui\backends\imgui_impl_win32.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="src\vendor\ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\vendor\ImGui\imgui_impl_opengl3.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_tables.cpp" />
     <ClCompile Include="src\vendor\ImGui\imgui_widgets.cpp" />
-    <ClCompile Include="src\vendor\ImGui\misc\cpp\imgui_stdlib.cpp" />
-    <ClCompile Include="src\vendor\ImGui\misc\fonts\binary_to_compressed_c.cpp" />
-    <ClCompile Include="src\vendor\ImGui\misc\freetype\imgui_freetype.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -214,33 +198,15 @@
     <ClInclude Include="src\vendor\IconFontCPPHeaders\IconsKenney.h" />
     <ClInclude Include="src\vendor\IconFontCPPHeaders\IconsMaterialDesign.h" />
     <ClInclude Include="src\vendor\ImGuiColorTextEdit\TextEditor.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_allegro5.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_android.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_dx10.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_dx11.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_dx12.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_dx9.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_glfw.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_glut.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_metal.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_opengl2.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_opengl3.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_opengl3_loader.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_osx.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_sdl.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_sdlrenderer.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_vulkan.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_wgpu.h" />
-    <ClInclude Include="src\vendor\ImGui\backends\imgui_impl_win32.h" />
     <ClInclude Include="src\vendor\ImGui\imconfig.h" />
     <ClInclude Include="src\vendor\ImGui\imgui.h" />
+    <ClInclude Include="src\vendor\ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="src\vendor\ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\vendor\ImGui\imgui_impl_opengl3_loader.h" />
     <ClInclude Include="src\vendor\ImGui\imgui_internal.h" />
     <ClInclude Include="src\vendor\ImGui\imstb_rectpack.h" />
     <ClInclude Include="src\vendor\ImGui\imstb_textedit.h" />
     <ClInclude Include="src\vendor\ImGui\imstb_truetype.h" />
-    <ClInclude Include="src\vendor\ImGui\misc\cpp\imgui_stdlib.h" />
-    <ClInclude Include="src\vendor\ImGui\misc\freetype\imgui_freetype.h" />
-    <ClInclude Include="src\vendor\ImGui\misc\single_file\imgui_single_file.h" />
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
