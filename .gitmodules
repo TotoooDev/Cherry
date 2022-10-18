@@ -1,0 +1,3 @@
+[submodule "TEXT/src/vendor/GLFW"]
+	path = TEXT/src/vendor/GLFW
+	url = https://github.com/glfw/glfw.git

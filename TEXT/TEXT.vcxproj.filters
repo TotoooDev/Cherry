@@ -137,8 +137,16 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\vendor\IconFontCppHeaders\licence.txt" />
+    <Text Include="src\vendor\GLFW\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+    <None Include="src\vendor\GLFW\.appveyor.yml" />
+    <None Include="src\vendor\GLFW\.gitattributes" />
+    <None Include="src\vendor\GLFW\.gitignore" />
+    <None Include="src\vendor\GLFW\.mailmap" />
+    <None Include="src\vendor\GLFW\CONTRIBUTORS.md" />
+    <None Include="src\vendor\GLFW\LICENSE.md" />
+    <None Include="src\vendor\GLFW\README.md" />
   </ItemGroup>
 </Project>

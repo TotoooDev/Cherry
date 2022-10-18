@@ -85,13 +85,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediate\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>src\vendor\GLFW\include;src\vendor;src;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>C:\Dev\Libs;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -200,10 +200,18 @@
     <ClInclude Include="src\Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="src\vendor\GLFW\CMakeLists.txt" />
     <Text Include="src\vendor\IconFontCppHeaders\licence.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+    <None Include="src\vendor\GLFW\.appveyor.yml" />
+    <None Include="src\vendor\GLFW\.gitattributes" />
+    <None Include="src\vendor\GLFW\.gitignore" />
+    <None Include="src\vendor\GLFW\.mailmap" />
+    <None Include="src\vendor\GLFW\CONTRIBUTORS.md" />
+    <None Include="src\vendor\GLFW\LICENSE.md" />
+    <None Include="src\vendor\GLFW\README.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
