@@ -15,6 +15,8 @@ public:
 	void Run();
 
 private:
+	void CreateDockspace();
+	void DrawMenuBar();
 	// TODO: Change this to an event system
 	void HandleInputs();
 	
@@ -26,6 +28,7 @@ private:
 	void SaveAll();
 
 	Window m_Window;
+	bool m_IsRunning = true;
 
 	std::vector<std::pair<EditorPanel, bool>> m_Editors;
 	EditorPanel* m_FocusedEditor = nullptr;
