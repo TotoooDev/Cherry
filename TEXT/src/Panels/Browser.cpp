@@ -41,7 +41,7 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			std::string displayName = ICON_MD_FOLDER " " + Utils::FileName(newPath);
 			bool treeNode = ImGui::TreeNodeEx(displayName.c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_FramePadding);
 			
-			std::string id = "contextual##" + dirEntry.path().string();
+			std::string id = "contextual_dir##" + dirEntry.path().string();
 			ShowContextualMenu(id.c_str(), newPath);
 
 			if (treeNode)
@@ -57,24 +57,27 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			std::string displayName = ICON_MD_DESCRIPTION " " + Utils::FileName(dirEntry);
 			if (ImGui::TreeNodeEx(displayName.c_str(), flags))
 			{
-				if (ImGui::IsItemClicked())
+				std::string id = "contextual_file##" + dirEntry.path().string();
+				if (ImGui::BeginPopupContextItem(id.c_str()))
 				{
-					m_SelectedPath = dirEntry.path().string();
-					bool exists = false;
-					for (auto&& [editor, isOpen] : *m_Editors)
-					{
-						if (m_SelectedPath == editor.GetPath())
-						{
-							if (!isOpen)
-								isOpen = true;
-							exists = true;
-							break;
-						}
-					}
-					if (!exists)
+					if (ImGui::MenuItem("Open"))
 					{
 						AddNewEditorPanel(dirEntry.path().string());
 					}
+					ImGui::Separator();
+					if (ImGui::MenuItem("Rename"))
+					{
+					}
+					if (ImGui::MenuItem("Delete"))
+					{
+						std::filesystem::remove(dirEntry);
+					}
+					ImGui::EndPopup();
+				}
+
+				if (ImGui::IsItemClicked())
+				{
+					AddNewEditorPanel(dirEntry.path().string());
 				}
 
 				ImGui::TreePop();
@@ -88,14 +91,28 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 
 void BrowserPanel::AddNewEditorPanel(const std::string& path)
 {
-	EditorPanel editor(path, Utils::FileName(path));
-	std::ifstream t(editor.GetPath());
+	m_SelectedPath = path;
+	bool exists = false;
+	for (auto&& [editor, isOpen] : *m_Editors)
+	{
+		if (m_SelectedPath == editor.GetPath())
+		{
+			if (!isOpen)
+				isOpen = true;
+			exists = true;
+			break;
+		}
+	}
+	if (!exists)
+	{
+		EditorPanel editor(path, Utils::FileName(path));
+		std::ifstream t(editor.GetPath());
 
-	std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
-	editor.GetEditor().SetText(str);
-	editor.GetEditor().SetShowWhitespaces(false);
-	// editor.GetEditor().SetTextChanged(false);
-	m_Editors->push_back({ editor, true });
+		std::string str((std::istreambuf_iterator<char>(t)), std::istreambuf_iterator<char>());
+		editor.GetEditor().SetText(str);
+		editor.GetEditor().SetShowWhitespaces(false);
+		m_Editors->push_back({ editor, true });
+	}
 }
 
 void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
@@ -149,6 +166,13 @@ void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
 					}
 				}
 			}
+		}
+
+		ImGui::Separator();
+
+		if (ImGui::MenuItem("Delete"))
+		{
+			std::filesystem::remove_all(path);
 		}
 
 		ImGui::EndPopup();

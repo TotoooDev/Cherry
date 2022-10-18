@@ -5,6 +5,7 @@
 #include <ImGui/imgui_impl_opengl3.h>
 #include <IconFontCppHeaders/IconsMaterialDesign.h>
 #include <iostream>
+#include <filesystem>
 
 bool WasGLFWInit = false;
 unsigned int NumWindows = 0;
@@ -59,7 +60,8 @@ Window::Window(const WindowSpecification& spec)
 	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", 18.0f, &icons_config, icons_ranges);
 
 	// Change the imgui.ini path so it does not appear everywhere
-	io.IniFilename = "imGui.ini";
+	std::string iniPath = std::filesystem::current_path().string() + "\\imgui.ini";
+	io.IniFilename = iniPath.c_str();
 
 	SetImGuiTheme();
 
