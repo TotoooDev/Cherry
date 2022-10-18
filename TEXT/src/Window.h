@@ -32,6 +32,7 @@ public:
 	bool ShouldClose() { return glfwWindowShouldClose(m_NativeWindow); }
 
 private:
+	void CenterWindow();
 	void SetImGuiTheme();
 
 	WindowSpecification m_Spec;
