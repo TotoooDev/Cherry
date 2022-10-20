@@ -60,8 +60,9 @@ Window::Window(const WindowSpecification& spec)
 	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", 18.0f, &icons_config, icons_ranges);
 
 	// Change the imgui.ini path so it does not appear everywhere
+	io.IniFilename = nullptr;
 	std::string iniPath = std::filesystem::current_path().string() + "\\imgui.ini";
-	io.IniFilename = iniPath.c_str();
+	ImGui::LoadIniSettingsFromDisk(iniPath.c_str());
 
 	SetImGuiTheme();
 

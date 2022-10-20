@@ -61,6 +61,8 @@ void App::Run()
 	}
 
 	Config::Write();
+	std::string iniPath = std::filesystem::current_path().string() + "\\imgui.ini";
+	ImGui::SaveIniSettingsToDisk(iniPath.c_str());
 }
 
 void App::CreateDockspace()
