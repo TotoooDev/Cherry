@@ -10,7 +10,9 @@
 App::App(const WindowSpecification& spec)
 	: m_Window(spec), m_BrowserPanel(&m_Editors)
 {
-	Config::SetConfigFile(std::filesystem::current_path().string() + "\\config.json");
+	m_ApplicationPath = std::filesystem::current_path().string();
+
+	Config::SetConfigFile(m_ApplicationPath + "\\config.json");
 
 	m_BrowserPanel.SetCurrentPath(Config::Get()["working_dir"]);
 }
@@ -61,7 +63,7 @@ void App::Run()
 	}
 
 	Config::Write();
-	std::string iniPath = std::filesystem::current_path().string() + "\\imgui.ini";
+	std::string iniPath = m_ApplicationPath + "\\imgui.ini";
 	ImGui::SaveIniSettingsToDisk(iniPath.c_str());
 }
 

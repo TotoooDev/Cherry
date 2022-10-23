@@ -27,6 +27,8 @@ private:
 	void SaveAs();
 	void SaveAll();
 
+	std::string m_ApplicationPath;
+
 	Window m_Window;
 	bool m_IsRunning = true;
 

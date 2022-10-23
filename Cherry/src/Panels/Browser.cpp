@@ -67,6 +67,7 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 					ImGui::Separator();
 					if (ImGui::MenuItem("Rename"))
 					{
+
 					}
 					if (ImGui::MenuItem("Delete"))
 					{
@@ -169,6 +170,11 @@ void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
 		}
 
 		ImGui::Separator();
+
+		if (ImGui::MenuItem("Rename"))
+		{
+
+		}
 
 		if (ImGui::MenuItem("Delete"))
 		{
