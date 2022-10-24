@@ -28,6 +28,7 @@ private:
 	void SaveAll();
 
 	std::string m_ApplicationPath;
+	std::string m_WorkingDir;
 
 	Window m_Window;
 	bool m_IsRunning = true;

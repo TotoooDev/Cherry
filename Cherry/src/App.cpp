@@ -14,7 +14,8 @@ App::App(const WindowSpecification& spec)
 
 	Config::SetConfigFile(m_ApplicationPath + "\\config.json");
 
-	m_BrowserPanel.SetCurrentPath(Config::Get()["working_dir"]);
+	m_WorkingDir = Config::Get()["working_dir"];
+	m_BrowserPanel.SetCurrentPath(m_WorkingDir);
 }
 
 void App::Run()
@@ -262,12 +263,20 @@ void App::Save()
 {
 	if (!m_FocusedEditor)
 		return;
+
 	if (m_FocusedEditor->GetPath().empty())
 	{
 		SaveAs();
 		return;
 	}
-	std::ofstream file(m_FocusedEditor->GetPath());
+
+	std::ofstream file;
+
+	if (m_FocusedEditor->IsPathAbsolute())
+		file.open(m_FocusedEditor->GetPath());
+	else
+		file.open(m_WorkingDir + m_FocusedEditor->GetPath());
+
 	file << m_FocusedEditor->GetEditor().GetText();
 	m_FocusedEditor->SetEdited(false);
 }
