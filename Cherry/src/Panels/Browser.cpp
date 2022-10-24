@@ -20,7 +20,7 @@ void BrowserPanel::Draw(bool* isOpen)
 
 	if (!m_CurrentPath.empty() && ImGui::TreeNodeEx(Utils::FileName(m_CurrentPath).c_str(), ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_DefaultOpen))
 	{
-		ShowContextualMenu("contextual_root", m_CurrentPath);
+		ShowContextualMenuFolder("contextual_root", m_CurrentPath);
 		RecurseFolders(m_CurrentPath, false);
 		ImGui::TreePop();
 	}
@@ -42,7 +42,7 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			bool treeNode = ImGui::TreeNodeEx(displayName.c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_FramePadding);
 			
 			std::string id = "contextual_dir##" + dirEntry.path().string();
-			ShowContextualMenu(id.c_str(), newPath);
+			ShowContextualMenuFolder(id.c_str(), newPath);
 
 			if (treeNode)
 			{
@@ -58,23 +58,7 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 			if (ImGui::TreeNodeEx(displayName.c_str(), flags))
 			{
 				std::string id = "contextual_file##" + dirEntry.path().string();
-				if (ImGui::BeginPopupContextItem(id.c_str()))
-				{
-					if (ImGui::MenuItem("Open"))
-					{
-						AddNewEditorPanel(dirEntry.path().string());
-					}
-					ImGui::Separator();
-					if (ImGui::MenuItem("Rename"))
-					{
-
-					}
-					if (ImGui::MenuItem("Delete"))
-					{
-						std::filesystem::remove(dirEntry);
-					}
-					ImGui::EndPopup();
-				}
+				ShowContextualMenuFile(id.c_str(), dirEntry.path().string());
 
 				if (ImGui::IsItemClicked())
 				{
@@ -116,8 +100,50 @@ void BrowserPanel::AddNewEditorPanel(const std::string& path)
 	}
 }
 
-void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
+void BrowserPanel::ShowContextualMenuFile(const char* id, const std::string& path)
 {
+	static bool renameopen = false;
+	static std::string renamename = path;
+
+	if (ImGui::BeginPopupContextItem(id))
+	{
+		if (ImGui::MenuItem("Open"))
+		{
+			AddNewEditorPanel(path);
+		}
+		ImGui::Separator();
+		if (ImGui::MenuItem("Rename"))
+		{
+			renameopen = true;
+			renamename = path;
+		}
+		if (ImGui::MenuItem("Delete"))
+		{
+			std::filesystem::remove(path);
+		}
+		ImGui::EndPopup();
+	}
+
+	// This is probably unsafe but it's temporary so it's alright
+	if (renameopen && path == renamename)
+	{
+		static char name[255];
+		memset(name, '\0', 255);
+		ImGui::Begin("rename folder", &renameopen);
+		if (ImGui::InputText("renamee", name, 255, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			std::filesystem::rename(path, name);
+			renamename = name;
+		}
+		ImGui::End();
+	}
+}
+
+void BrowserPanel::ShowContextualMenuFolder(const char* id, const std::string& path)
+{
+	static bool renameopen = false;
+	static std::string renamename = path;
+
 	if (ImGui::BeginPopupContextItem(id))
 	{
 		// What the fuck.
@@ -173,7 +199,8 @@ void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
 
 		if (ImGui::MenuItem("Rename"))
 		{
-
+			renameopen = true;
+			renamename = path;
 		}
 
 		if (ImGui::MenuItem("Delete"))
@@ -182,5 +209,19 @@ void BrowserPanel::ShowContextualMenu(const char* id, const std::string& path)
 		}
 
 		ImGui::EndPopup();
+	}
+
+	// This is probably unsafe but it's temporary so it's alright
+	if (renameopen && path == renamename)
+	{
+		static char name[255];
+		memset(name, '\0', 255);
+		ImGui::Begin("rename folder", &renameopen);
+		if (ImGui::InputText("renamee", name, 255, ImGuiInputTextFlags_EnterReturnsTrue))
+		{
+			std::filesystem::rename(path, name);
+			renamename = name;
+		}
+		ImGui::End();
 	}
 }
