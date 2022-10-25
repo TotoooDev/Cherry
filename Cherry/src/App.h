@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Window.h>
+#include <ImGuiConfig.h>
 #include <Panels/Editor.h>
 #include <Panels/Browser.h>
 #include <Panels/Start.h>
@@ -32,6 +33,8 @@ private:
 
 	Window m_Window;
 	bool m_IsRunning = true;
+
+	ImGuiConfig m_ImGuiConfig;
 
 	std::vector<std::pair<EditorPanel, bool>> m_Editors;
 	EditorPanel* m_FocusedEditor = nullptr;

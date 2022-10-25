@@ -18,22 +18,19 @@ public:
 	Window(const WindowSpecification& spec);
 	~Window();
 
-	WindowSpecification GetSpec() { return m_Spec; }
-	GLFWwindow* GetNativeWindow() { return m_NativeWindow; }
+	WindowSpecification GetSpec() const { return m_Spec; }
+	GLFWwindow* GetNativeWindow() const { return m_NativeWindow; }
 
-	void BeginImGui();
-	void EndImGui();
 	void PollEvents() { glfwPollEvents(); }
 	void Swap() { glfwSwapBuffers(m_NativeWindow); }
 	void Close() { glfwSetWindowShouldClose(m_NativeWindow, true); }
 
 	bool Key(int key);
 	bool MouseButton(int button);
-	bool ShouldClose() { return glfwWindowShouldClose(m_NativeWindow); }
+	bool ShouldClose() const { return glfwWindowShouldClose(m_NativeWindow); }
 
 private:
 	void CenterWindow();
-	void SetImGuiTheme();
 
 	WindowSpecification m_Spec;
 	GLFWwindow* m_NativeWindow;

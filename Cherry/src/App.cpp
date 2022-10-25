@@ -8,7 +8,7 @@
 #include <iostream>
 
 App::App(const WindowSpecification& spec)
-	: m_Window(spec), m_BrowserPanel(&m_Editors)
+	: m_Window(spec), m_BrowserPanel(&m_Editors), m_ImGuiConfig(&m_Window)
 {
 	m_ApplicationPath = std::filesystem::current_path().string();
 
@@ -27,7 +27,7 @@ void App::Run()
 		m_Window.PollEvents();
 		HandleInputs();
 
-		m_Window.BeginImGui();
+		m_ImGuiConfig.Begin();
 
 		CreateDockspace();
 
@@ -58,7 +58,7 @@ void App::Run()
 		// Mandatory ImGui::End() because of CreateDockspace()
 		ImGui::End();
 
-		m_Window.EndImGui();
+		m_ImGuiConfig.End();
 
 		m_Window.Swap();
 	}

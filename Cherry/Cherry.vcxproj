@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Config.cpp" />
+    <ClCompile Include="src\ImGuiConfig.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Panels\Browser.cpp" />
     <ClCompile Include="src\Panels\Editor.cpp" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClInclude Include="src\App.h" />
     <ClInclude Include="src\Config.h" />
+    <ClInclude Include="src\ImGuiConfig.h" />
     <ClInclude Include="src\Keycode.h" />
     <ClInclude Include="src\Panels\Browser.h" />
     <ClInclude Include="src\Panels\Editor.h" />
