@@ -53,11 +53,12 @@ Window::Window(const WindowSpecification& spec)
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
 	// Add a prettier font
-	io.FontDefault = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", 18.0f);
+	float fontSize = 24.0f;
+	io.FontDefault = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", fontSize);
 	// Merge in icons from Font Awesome
 	static const ImWchar icons_ranges[] = { ICON_MIN_MD, ICON_MAX_16_MD, 0 };
 	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", 18.0f, &icons_config, icons_ranges);
+	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", fontSize, &icons_config, icons_ranges);
 
 	// Change the imgui.ini path so it does not appear everywhere
 	io.IniFilename = nullptr;

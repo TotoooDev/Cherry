@@ -35,9 +35,9 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 	for (auto const& dirEntry : std::filesystem::directory_iterator("."))
 	{
 		std::filesystem::current_path(path);
+		std::string newPath = std::filesystem::current_path().string() + "\\" + Utils::FileName(dirEntry);
 		if (dirEntry.is_directory())
 		{
-			std::string newPath = std::filesystem::current_path().string() + "\\" + Utils::FileName(dirEntry);
 			std::string displayName = ICON_MD_FOLDER " " + Utils::FileName(newPath);
 			bool treeNode = ImGui::TreeNodeEx(displayName.c_str(), ImGuiTreeNodeFlags_SpanFullWidth | ImGuiTreeNodeFlags_FramePadding);
 			
@@ -62,7 +62,7 @@ void BrowserPanel::RecurseFolders(std::string path, bool treeNodeOpened)
 
 				if (ImGui::IsItemClicked())
 				{
-					AddNewEditorPanel(dirEntry.path().string());
+					AddNewEditorPanel(newPath);
 				}
 
 				ImGui::TreePop();
