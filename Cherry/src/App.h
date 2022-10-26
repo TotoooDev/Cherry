@@ -35,6 +35,10 @@ private:
 	bool m_IsRunning = true;
 
 	ImGuiConfig m_ImGuiConfig;
+	bool m_IncreaseFontUI = false;
+	bool m_DecreaseFontUI = false;
+	bool m_IncreaseFontEditor = false;
+	bool m_DecreaseFontEditor = false;
 
 	std::vector<std::pair<EditorPanel, bool>> m_Editors;
 	EditorPanel* m_FocusedEditor = nullptr;

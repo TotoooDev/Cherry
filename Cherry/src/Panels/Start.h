@@ -1,12 +1,12 @@
 #pragma once
 
+#include <ImGuiConfig.h>
 #include <ImGui/imgui.h>
-#include <functional>
 
 class StartPanel
 {
 public:
-	StartPanel();
+	StartPanel(ImGuiConfig* config);
 
 	void Draw(bool* isOpen);
 
@@ -15,6 +15,8 @@ public:
 	bool OpenFolder() { return m_OpenFolder; }
 
 private:
+	ImGuiConfig* m_Config;
+
 	ImFont* m_LargeFont;
 	ImFont* m_MediumFont;
 

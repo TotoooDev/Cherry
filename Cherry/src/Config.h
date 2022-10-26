@@ -13,5 +13,5 @@ public:
 
 private:
 	inline static nlohmann::json m_JSON;
-	inline static std::string m_FilePath = "TOE_GlobalConfig.json";
+	inline static std::string m_FilePath = ".\\config.json";
 };

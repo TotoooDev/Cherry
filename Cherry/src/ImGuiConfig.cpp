@@ -16,13 +16,10 @@ ImGuiConfig::ImGuiConfig(Window* window)
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 	io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
 
-	// Add a prettier font
-	float fontSize = 24.0f;
-	io.FontDefault = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", fontSize);
-	// Merge in icons from Font Awesome
-	static const ImWchar icons_ranges[] = { ICON_MIN_MD, ICON_MAX_16_MD, 0 };
-	ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
-	io.Fonts->AddFontFromFileTTF("fonts/material/MaterialIcons-Regular.ttf", fontSize, &icons_config, icons_ranges);
+	// Load fonts at a stupidly high size so we just decrease the size afterwards to enable zooming
+	// This is the best solution I found for zooming/dezooming
+	LoadFont(FontIndex::UI, 64.0f);
+	LoadFont(FontIndex::Icons, 64.0f);
 
 	// Change the imgui.ini path so it does not appear everywhere
 	io.IniFilename = nullptr;
@@ -42,6 +39,8 @@ ImGuiConfig::ImGuiConfig(Window* window)
 	// Setup Platform/Renderer backends
 	ImGui_ImplGlfw_InitForOpenGL(m_Window->GetNativeWindow(), true);
 	ImGui_ImplOpenGL3_Init("#version 330 core");
+
+	m_IsImGuiInit = true;
 }
 
 ImGuiConfig::~ImGuiConfig()
@@ -57,10 +56,20 @@ void ImGuiConfig::Begin()
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplGlfw_NewFrame();
 	ImGui::NewFrame();
+
+	// Decrease the font size
+	m_FontMap[FontIndex::UI]->Scale = m_FontScaleUI;
+	m_FontMap[FontIndex::Icons]->Scale = m_FontScaleUI;
+	ImGui::PushFont(m_FontMap[FontIndex::UI]);
+	ImGui::PushFont(m_FontMap[FontIndex::Icons]);
 }
 
 void ImGuiConfig::End()
 {
+	// Pop the fonts
+	ImGui::PopFont();
+	ImGui::PopFont();
+
 	// Rendering
 	ImGui::Render();
 	int display_w, display_h;
@@ -80,6 +89,79 @@ void ImGuiConfig::End()
 		ImGui::UpdatePlatformWindows();
 		ImGui::RenderPlatformWindowsDefault();
 		glfwMakeContextCurrent(backup_current_context);
+	}
+}
+
+void ImGuiConfig::SetFontScaleUI(float scale)
+{
+	m_FontScaleUI = scale;
+}
+
+void ImGuiConfig::SetFontScaleEditor(float scale)
+{
+	m_FontScaleEditor = scale;
+}
+
+void ImGuiConfig::ChangeFontScaleUI(float amount)
+{
+	m_FontScaleUI += amount;
+}
+
+void ImGuiConfig::ChangeFontScaleEditor(float amount)
+{
+	m_FontScaleEditor += amount;
+}
+
+void ImGuiConfig::LoadFont(FontIndex id, float size)
+{
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+	switch (id)
+	{
+	case FontIndex::UI:
+		m_FontMap[id] = io.Fonts->AddFontFromFileTTF(GetFontPath(id).c_str(), size);
+		io.FontDefault = m_FontMap[id];
+		break;
+
+	case FontIndex::Icons:
+	{
+		static const ImWchar icons_ranges[] = { ICON_MIN_MD, ICON_MAX_16_MD, 0 };
+		ImFontConfig icons_config; icons_config.MergeMode = true; icons_config.PixelSnapH = true;
+		m_FontMap[id] = io.Fonts->AddFontFromFileTTF(GetFontPath(id).c_str(), size, &icons_config, icons_ranges);
+		break;
+	}
+
+	default:
+		break;
+	}
+}
+
+void ImGuiConfig::ApplyEditorFontScale()
+{
+	m_FontMap[FontIndex::UI]->Scale = m_FontScaleEditor;
+	ImGui::PushFont(m_FontMap[FontIndex::UI]);
+}
+
+void ImGuiConfig::RemoveEditorFontScale()
+{
+	ImGui::PopFont();
+}
+
+std::string ImGuiConfig::GetFontPath(FontIndex id)
+{
+	switch (id)
+	{
+	case FontIndex::UI:
+		return Config::Get()["theme"]["fonts"]["ui"];
+		break;
+
+	case FontIndex::Icons:
+		return Config::Get()["theme"]["fonts"]["icons"];
+		break;
+
+	default:
+		return "";
+		break;
 	}
 }
 

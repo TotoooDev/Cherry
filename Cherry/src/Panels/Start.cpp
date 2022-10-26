@@ -2,10 +2,12 @@
 #include <Utils.h>
 #include <IconFontCppHeaders/IconsMaterialDesign.h>
 
-StartPanel::StartPanel()
+StartPanel::StartPanel(ImGuiConfig* config)
+	: m_Config(config)
 {
-	m_LargeFont = Utils::GetDefaultFontWithScale(64.0f);
-	m_MediumFont = Utils::GetDefaultFontWithScale(32.0f);
+	// This is temporary
+	m_LargeFont = m_Config->GetImFont(FontIndex::UI);
+	m_MediumFont = m_Config->GetImFont(FontIndex::UI);
 }
 
 void StartPanel::Draw(bool* isOpen)
@@ -37,13 +39,13 @@ void StartPanel::Draw(bool* isOpen)
 	ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0.0f, 16.0f));
 
 	ImGui::SameLine(128.0f);
-	m_New = ImGui::Button(ICON_MD_DESCRIPTION "New file");
+	m_New = ImGui::Button(ICON_MD_DESCRIPTION " New file");
 	ImGui::NewLine();
 	ImGui::SameLine(128.0f);
-	m_Open = ImGui::Button(ICON_MD_FILE_OPEN "Open file");
+	m_Open = ImGui::Button(ICON_MD_FILE_OPEN " Open file");
 	ImGui::NewLine();
 	ImGui::SameLine(128.0f);
-	m_OpenFolder = ImGui::Button(ICON_MD_FOLDER_OPEN "Open folder");
+	m_OpenFolder = ImGui::Button(ICON_MD_FOLDER_OPEN " Open folder");
 
 	ImGui::PopStyleVar();
 

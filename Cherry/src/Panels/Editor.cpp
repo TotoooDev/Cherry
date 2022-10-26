@@ -18,10 +18,6 @@ void EditorPanel::Draw(bool* isOpen)
 	m_IsFocused = ImGui::IsWindowFocused();
 
 	auto cpos = m_Editor.GetCursorPosition();
-	ImGui::Text("%6d/%-6d %6d lines  | %s | %s | %s | %s", cpos.mLine + 1, cpos.mColumn + 1, m_Editor.GetTotalLines(),
-		m_Editor.IsOverwrite() ? "Ovr" : "Ins",
-		m_Editor.CanUndo() ? "*" : " ",
-		m_Editor.GetLanguageDefinition().mName.c_str(), m_Path.c_str());
 	m_Editor.Render("TextEditor");
 
 	ImGui::End();

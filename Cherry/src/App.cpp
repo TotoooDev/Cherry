@@ -8,11 +8,9 @@
 #include <iostream>
 
 App::App(const WindowSpecification& spec)
-	: m_Window(spec), m_BrowserPanel(&m_Editors), m_ImGuiConfig(&m_Window)
+	: m_Window(spec), m_BrowserPanel(&m_Editors), m_StartPanel(&m_ImGuiConfig), m_ImGuiConfig(&m_Window)
 {
 	m_ApplicationPath = std::filesystem::current_path().string();
-
-	Config::SetConfigFile(m_ApplicationPath + "\\config.json");
 
 	m_WorkingDir = Config::Get()["working_dir"];
 	m_BrowserPanel.SetCurrentPath(m_WorkingDir);
@@ -33,14 +31,6 @@ void App::Run()
 
 		DrawMenuBar();
 
-		for (auto&& [editor, isOpen] : m_Editors)
-		{
-			if (isOpen)
-				editor.Draw(&isOpen);
-			if (editor.IsFocused())
-				m_FocusedEditor = &editor;
-		}
-
 		if (m_ShowBrowserPanel)
 			m_BrowserPanel.Draw(&m_ShowBrowserPanel);
 
@@ -55,12 +45,43 @@ void App::Run()
 				OpenFolder();
 		}
 
+		m_ImGuiConfig.ApplyEditorFontScale();
+		for (auto&& [editor, isOpen] : m_Editors)
+		{
+			if (isOpen)
+				editor.Draw(&isOpen);
+			if (editor.IsFocused())
+				m_FocusedEditor = &editor;
+		}
+		m_ImGuiConfig.RemoveEditorFontScale();
+
 		// Mandatory ImGui::End() because of CreateDockspace()
 		ImGui::End();
 
 		m_ImGuiConfig.End();
 
 		m_Window.Swap();
+
+		if (m_IncreaseFontUI)
+		{
+			m_ImGuiConfig.ChangeFontScaleUI(0.01f);
+			m_IncreaseFontUI = false;
+		}
+		if (m_DecreaseFontUI)
+		{
+			m_ImGuiConfig.ChangeFontScaleUI(-0.01f);
+			m_DecreaseFontUI = false;
+		}
+		if (m_IncreaseFontEditor)
+		{
+			m_ImGuiConfig.ChangeFontScaleEditor(0.01f);
+			m_IncreaseFontEditor = false;
+		}
+		if (m_DecreaseFontEditor)
+		{
+			m_ImGuiConfig.ChangeFontScaleEditor(-0.01f);
+			m_DecreaseFontEditor = false;
+		}
 	}
 
 	Config::Write();
@@ -173,6 +194,29 @@ void App::DrawMenuBar()
 	}
 	if (ImGui::BeginMenu("View"))
 	{
+		if (ImGui::BeginMenu("Appearance"))
+		{
+			if (ImGui::MenuItem("Increase font size", "Ctrl+Maj+="))
+			{
+				m_IncreaseFontUI = true;
+			}
+			if (ImGui::MenuItem("Decrease font size", "Ctrl+Maj+-"))
+			{
+				m_DecreaseFontUI = true;
+			}
+			if (ImGui::MenuItem("Increase font size (editor)", "Ctrl+="))
+			{
+				m_IncreaseFontEditor = true;
+			}
+			if (ImGui::MenuItem("Decrease font size (editor)", "Ctrl+-"))
+			{
+				m_IncreaseFontEditor = true;
+			}
+			ImGui::EndMenu();
+		}
+
+		ImGui::Separator();
+
 		ImGui::MenuItem("File browser", "", &m_ShowBrowserPanel);
 		ImGui::MenuItem("Get started", "", &m_ShowStartPanel);
 
@@ -185,13 +229,26 @@ void App::HandleInputs()
 {
 	if (m_Window.Key(TOE_KEY_LEFT_CONTROL) || m_Window.Key(TOE_KEY_RIGHT_CONTROL))
 	{
+		// Shift shortcuts
 		if (m_Window.Key(TOE_KEY_LEFT_SHIFT) || m_Window.Key(TOE_KEY_RIGHT_SHIFT))
 		{
+			// File
 			if (m_Window.Key(TOE_KEY_O))
 				OpenFolder();
 			if (m_Window.Key(TOE_KEY_S))
 				SaveAs();
+
+			// Appearance
+			if (m_Window.Key(TOE_KEY_MINUS))
+				m_DecreaseFontUI = true;
+			if (m_Window.Key(TOE_KEY_EQUAL))
+				m_IncreaseFontUI = true;
+
+			// No need to process other shortcuts
+			return;
 		}
+
+		// File
 		if (m_Window.Key(TOE_KEY_N))
 			New();
 		if (m_Window.Key(TOE_KEY_O))
@@ -199,6 +256,7 @@ void App::HandleInputs()
 		if (m_Window.Key(TOE_KEY_S))
 			Save();
 
+		// Edit
 		if (m_Window.Key(TOE_KEY_Z))
 			m_FocusedEditor->GetEditor().Undo();
 		if (m_Window.Key(TOE_KEY_Y))
@@ -210,6 +268,12 @@ void App::HandleInputs()
 			m_FocusedEditor->GetEditor().Copy();
 		if (m_Window.Key(TOE_KEY_P))
 			m_FocusedEditor->GetEditor().Paste();
+
+		// Appearance
+		if (m_Window.Key(TOE_KEY_MINUS))
+			m_DecreaseFontEditor = true;
+		if (m_Window.Key(TOE_KEY_EQUAL))
+			m_IncreaseFontEditor = true;
 	}
 }
 

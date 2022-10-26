@@ -114,11 +114,4 @@ namespace Utils
 	{
 		return std::filesystem::path(path).filename().string();
 	}
-
-	ImFont* GetDefaultFontWithScale(float scale)
-	{
-		auto& io = ImGui::GetIO();
-		ImFont* font = io.Fonts->AddFontFromFileTTF("fonts/opensans/OpenSans-Regular.ttf", scale);
-		return font;
-	}
 }
