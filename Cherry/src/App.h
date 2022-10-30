@@ -5,6 +5,7 @@
 #include <Panels/Editor.h>
 #include <Panels/Browser.h>
 #include <Panels/Start.h>
+#include <Panels/Markdown.h>
 #include <ImGuiColorTextEdit/TextEditor.h>
 
 class App

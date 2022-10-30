@@ -163,6 +163,7 @@
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Panels\Browser.cpp" />
     <ClCompile Include="src\Panels\Editor.cpp" />
+    <ClCompile Include="src\Panels\Markdown.cpp" />
     <ClCompile Include="src\Panels\Start.cpp" />
     <ClCompile Include="src\Utils.cpp" />
     <ClCompile Include="src\vendor\ImGuiColorTextEdit\TextEditor.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\Keycode.h" />
     <ClInclude Include="src\Panels\Browser.h" />
     <ClInclude Include="src\Panels\Editor.h" />
+    <ClInclude Include="src\Panels\Markdown.h" />
     <ClInclude Include="src\Panels\Start.h" />
     <ClInclude Include="src\Utils.h" />
     <ClInclude Include="src\vendor\GLFW\glfw3.h" />
