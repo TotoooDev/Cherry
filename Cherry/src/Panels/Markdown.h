@@ -9,7 +9,7 @@ enum class MarkdownID
 	Header,         // Length of the element
 	Bold,           // Length of the element
 	Italic,         // Length of the element
-	BlockQuote,     // Data field unused
+	Blockquote,     // Data field unused
 	OrderedList,    // Index of the list
 	UnorderedList,  // Index of the list
 	Code,           // Length of the element

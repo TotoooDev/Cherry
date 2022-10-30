@@ -55,7 +55,7 @@ void App::Run()
 		}
 		m_ImGuiConfig.RemoveEditorFontScale();
 
-		std::string str = "bonjour\nhaha\n###bonjour\n#youpi\nhaha";
+		std::string str = "*haha* hihi\n###bonjour\n#youpi\nhaha";
 		MarkdownViewer viewer(&str);
 		viewer.Draw(nullptr);
 

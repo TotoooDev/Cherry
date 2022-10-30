@@ -37,6 +37,34 @@ void MarkdownViewer::Parse()
 
 			break;
 		}
+
+		case '>':
+		{
+			// Blockquote
+			MarkdownType type;
+			type.ID = MarkdownID::Blockquote;
+			type.Data = -1;
+			type.Text = line;
+
+			break;
+		}
+		}
+
+		if (line.find_first_of('*') != std::string::npos)
+		{
+			unsigned int openIndex = line.find_first_of('*');
+			std::string text = line.substr(openIndex + 1);
+
+			if (text[0] == '*')
+			{
+				// Bold text
+			}
+			else
+			{
+				// Italic text
+				unsigned int closeIndex = line.find_first_of('*');
+				text = text.substr(closeIndex);
+			}
 		}
 	}
 }
